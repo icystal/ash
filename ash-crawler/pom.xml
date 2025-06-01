@@ -13,4 +13,16 @@
 
   <name>ash-crawler</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>fun.icystal</groupId>
+      <artifactId>ash-common</artifactId>
+      <version>${ash.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -1,0 +1,23 @@
+package fun.icystal;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Setter
+@Getter
+public class ZhiHuHotItem {
+
+    private String title;
+
+    private String link;
+
+    private String excerpt;
+
+    private String imgUrl;
+
+    private Integer index;
+
+    private LocalDateTime fetchTime;
+}
