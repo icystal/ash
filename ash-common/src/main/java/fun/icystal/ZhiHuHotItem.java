@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 public class ZhiHuHotItem {
 
+    private Long id;
+
     private String title;
 
     private String link;
@@ -17,7 +19,7 @@ public class ZhiHuHotItem {
 
     private String imgUrl;
 
-    private Integer index;
+    private Integer sort;
 
     private LocalDateTime fetchTime;
 }

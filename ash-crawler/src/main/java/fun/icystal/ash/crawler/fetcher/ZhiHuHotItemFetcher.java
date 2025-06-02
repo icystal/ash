@@ -1,5 +1,6 @@
 package fun.icystal.ash.crawler.fetcher;
 
+import com.alibaba.fastjson2.JSON;
 import fun.icystal.ZhiHuHotItem;
 import fun.icystal.ash.crawler.exception.FetchFailedException;
 import fun.icystal.ash.crawler.http.HeaderFactory;
@@ -33,7 +34,7 @@ public class ZhiHuHotItemFetcher {
 
     private static final String zhiHuHotRankUrl = "https://www.zhihu.com/hot";
 
-    private ZhiHuHotItemFetcher() {
+    public ZhiHuHotItemFetcher() {
 
         targetUri = URI.create(zhiHuHotRankUrl);
         client = HttpClient.newBuilder()
@@ -44,8 +45,8 @@ public class ZhiHuHotItemFetcher {
     }
 
 
-    List<ZhiHuHotItem> fetch() throws IOException, InterruptedException, FetchFailedException {
-
+    private List<ZhiHuHotItem> fetch() throws IOException, InterruptedException, FetchFailedException {
+        log.info("start fetch hot items from ZHIHU");
         HttpResponse.BodyHandler<String> bodyHandler = HttpResponse.BodyHandlers.ofString(Charset.defaultCharset());
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -64,16 +65,20 @@ public class ZhiHuHotItemFetcher {
         String body = response.body();
 
         Document document = Jsoup.parse(body);
-        return select(document);
+        List<ZhiHuHotItem> itemList = select(document);
+        log.info("fetched hot items form ZHIHU: {}", JSON.toJSONString(itemList));
+        return itemList;
     }
 
-    List<ZhiHuHotItem> fetch(int retry) {
+    public List<ZhiHuHotItem> fetch(int retry) {
         if (retry < 0) {
             return Collections.emptyList();
         }
         try {
             return fetch();
         } catch (Exception e) {
+
+            log.error("fetch hot items from ZHIHU exception", e);
             sleep();
             return fetch(retry - 1);
         }
@@ -82,7 +87,8 @@ public class ZhiHuHotItemFetcher {
     private void sleep() {
         try {
             Thread.sleep(Duration.ofSeconds(10));
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
     }
 
     private List<ZhiHuHotItem> select(Document document) {
@@ -92,7 +98,7 @@ public class ZhiHuHotItemFetcher {
         List<ZhiHuHotItem> hotItemList = new ArrayList<>();
         for (Element hotItem : hotItems) {
             ZhiHuHotItem zhiHuHotItem = new ZhiHuHotItem();
-            zhiHuHotItem.setIndex(selectIndex(hotItem));
+            zhiHuHotItem.setSort(selectIndex(hotItem));
             zhiHuHotItem.setLink(selectLink(hotItem));
             zhiHuHotItem.setTitle(selectTitle(hotItem));
             zhiHuHotItem.setExcerpt(selectText(hotItem));
@@ -108,7 +114,7 @@ public class ZhiHuHotItemFetcher {
         try {
             return hotItem.getElementsByClass("HotItem-title").getFirst().text();
         } catch (Exception e) {
-            log.error("select title error from hot item: {}", hotItem.toString());
+            log.error("select title error from hot item");
         }
         return null;
     }
@@ -117,7 +123,7 @@ public class ZhiHuHotItemFetcher {
         try {
             return Objects.requireNonNull(hotItem.getElementsByClass("HotItem-content").getFirst().getElementsByTag("a").getFirst().attribute("href")).getValue();
         } catch (Exception e) {
-            log.error("select link error from hot item: {}", hotItem.toString());
+            log.error("select link error from hot item");
         }
         return null;
     }
@@ -126,7 +132,7 @@ public class ZhiHuHotItemFetcher {
         try {
             return hotItem.getElementsByClass("HotItem-excerpt").getFirst().text();
         } catch (Exception e) {
-            log.error("select text error from hot item: {}", hotItem.toString());
+            log.error("select text error from hot item");
         }
         return null;
     }
@@ -137,7 +143,7 @@ public class ZhiHuHotItemFetcher {
                     .getElementsByTag("img").getFirst()
                     .attribute("src")).getValue();
         } catch (Exception e) {
-            log.error("select image error from hot item: {}", hotItem.toString());
+            log.error("select image error from hot item");
         }
         return null;
     }
@@ -147,16 +153,14 @@ public class ZhiHuHotItemFetcher {
             String index = hotItem.getElementsByClass("HotItem-rank").getFirst().text();
             return Integer.parseInt(index);
         } catch (Exception e) {
-            log.error("select index error from hot item: {}", hotItem.toString());
+            log.error("select index error from hot item");
         }
         return null;
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        ZhiHuHotItemFetcher fetcher = new ZhiHuHotItemFetcher();
-        List<ZhiHuHotItem> hotItems = fetcher.fetch(3);
-        System.out.println(hotItems);
+    public static void main(String[] args) {
+        ZhiHuHotItemFetcher zhiHuHotItemFetcher = new ZhiHuHotItemFetcher();
+        List<ZhiHuHotItem> items = zhiHuHotItemFetcher.fetch(3);
+        System.out.println(JSON.toJSONString(items));
     }
-
-
 }
