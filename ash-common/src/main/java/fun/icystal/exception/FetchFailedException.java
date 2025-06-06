@@ -1,4 +1,4 @@
-package fun.icystal.ash.crawler.exception;
+package fun.icystal.exception;
 
 public class FetchFailedException extends Exception {
 

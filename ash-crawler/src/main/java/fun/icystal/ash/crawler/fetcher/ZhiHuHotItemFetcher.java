@@ -1,97 +1,82 @@
 package fun.icystal.ash.crawler.fetcher;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import fun.icystal.ZhiHuHotItem;
-import fun.icystal.ash.crawler.exception.FetchFailedException;
-import fun.icystal.ash.crawler.http.HeaderFactory;
+import fun.icystal.ash.crawler.http.HttpRequestEmitter;
+import fun.icystal.ash.crawler.http.SimpleRequestEmitter;
+import fun.icystal.exception.FetchFailedException;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.Charset;
-import java.time.Duration;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- * 抓取知乎热榜的工具
- */
 @Slf4j
-public class ZhiHuHotItemFetcher {
+public class ZhiHuHotItemFetcher extends Fetcher<List<ZhiHuHotItem>> {
+    private static final String resourcePath = "crawler/headers.json";
 
-    private final HttpClient client;
-
-    private final URI targetUri;
-
-    private final HeaderFactory headerFactory;
-
-    private static final String zhiHuHotRankUrl = "https://www.zhihu.com/hot";
+    private static final String url = "https://www.zhihu.com/hot";
 
     public ZhiHuHotItemFetcher() {
-
-        targetUri = URI.create(zhiHuHotRankUrl);
-        client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(30))
-                .followRedirects(HttpClient.Redirect.ALWAYS)
-                .build();
-        headerFactory = HeaderFactory.headers();
+        super(url);
     }
 
+    @Override
+    protected CookieHandler initCookieHandler() {
+        Map<String, String> headers = readHeaders();
 
-    private List<ZhiHuHotItem> fetch() throws IOException, InterruptedException, FetchFailedException {
-        log.info("start fetch hot items from ZHIHU");
-        HttpResponse.BodyHandler<String> bodyHandler = HttpResponse.BodyHandlers.ofString(Charset.defaultCharset());
+        CookieManager manager = new CookieManager();
+        manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(targetUri)
-                .timeout(Duration.ofSeconds(10))
-                .headers(headerFactory.getHeaders())
-                .build();
-        HttpResponse<String> response = client.send(request, bodyHandler);
-
-        if (response.statusCode() != 200) {
-            throw new FetchFailedException();
-        }
-        headerFactory.acceptCookies(response.headers());
-
-        String body = response.body();
-
-        Document document = Jsoup.parse(body);
-        List<ZhiHuHotItem> itemList = select(document);
-        log.info("fetched hot items form ZHIHU: {}", JSON.toJSONString(itemList));
-        return itemList;
+        CookieStore store = manager.getCookieStore();
+        parseCookies(headers.get("Cookie")).forEach(cookie -> store.add(target, cookie));
+        return manager;
     }
 
-    public List<ZhiHuHotItem> fetch(int retry) {
-        if (retry < 0) {
+    private List<HttpCookie> parseCookies(String rawCookies) {
+        if (rawCookies == null || rawCookies.isBlank()) {
             return Collections.emptyList();
         }
-        try {
-            return fetch();
+
+        return Arrays.stream(rawCookies.split(";"))
+                .map(String::strip)
+                .map(rawCookie -> {
+                    int index = rawCookie.strip().indexOf('=');
+                    HttpCookie cookie = new HttpCookie(rawCookie.substring(0, index).strip(), rawCookie.substring(index + 1).strip());
+                    cookie.setPath(target.getPath());
+                    cookie.setDomain(target.getAuthority());
+                    return cookie;
+                }).toList();
+    }
+
+    private Map<String, String> readHeaders() {
+        try (InputStream resource = ZhiHuHotItemFetcher.class.getClassLoader().getResourceAsStream(resourcePath)) {
+            if (resource == null) {
+                return Collections.emptyMap();
+            }
+            String content = new String(resource.readAllBytes(), StandardCharsets.UTF_8);
+            return JSON.parseObject(content, new TypeReference<>() {});
         } catch (Exception e) {
-
-            log.error("fetch hot items from ZHIHU exception", e);
-            sleep();
-            return fetch(retry - 1);
+            log.error("load headers from resource file failed", e);
+            return Collections.emptyMap();
         }
     }
 
-    private void sleep() {
-        try {
-            Thread.sleep(Duration.ofSeconds(10));
-        } catch (InterruptedException ignored) {
-        }
+    @Override
+    protected HttpRequestEmitter initEmitter() {
+        Map<String, String> headers = readHeaders();
+        return new SimpleRequestEmitter(headers, true);
     }
 
-    private List<ZhiHuHotItem> select(Document document) {
+    @Override
+    protected List<ZhiHuHotItem> select(Document document) {
         LocalDateTime time = LocalDateTime.now();
         Elements hotItems = document.getElementsByClass("HotItem");
 
@@ -158,9 +143,10 @@ public class ZhiHuHotItemFetcher {
         return null;
     }
 
-    public static void main(String[] args) {
-        ZhiHuHotItemFetcher zhiHuHotItemFetcher = new ZhiHuHotItemFetcher();
-        List<ZhiHuHotItem> items = zhiHuHotItemFetcher.fetch(3);
+    public static void main(String[] args) throws FetchFailedException, IOException, InterruptedException {
+        Fetcher<List<ZhiHuHotItem>> fetcher = new ZhiHuHotItemFetcher();
+        List<ZhiHuHotItem> items = fetcher.fetch(3);
         System.out.println(JSON.toJSONString(items));
     }
+
 }
