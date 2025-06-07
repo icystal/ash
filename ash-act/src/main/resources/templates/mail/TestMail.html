@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试邮件</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .title { color: #333; font-size: 18px; margin-bottom: 15px; }
+        .message { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<div class="notification">
+    <div class="title" th:text="${title}">系统测试</div>
+    <div class="message" th:text="${message}">这是一条系统通知消息。</div>
+</div>
+</body>
+</html>
