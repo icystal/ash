@@ -1,4 +1,4 @@
-package fun.icystal;
+package fun.icystal.entity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package fun.icystal.act.service;
 
-import fun.icystal.ZhiHuItemVO;
+import fun.icystal.vo.ZhiHuItemVO;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

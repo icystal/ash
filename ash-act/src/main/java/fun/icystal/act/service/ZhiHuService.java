@@ -1,7 +1,7 @@
 package fun.icystal.act.service;
 
-import fun.icystal.ZhiHuHotItem;
-import fun.icystal.ZhiHuItemVO;
+import fun.icystal.entity.ZhiHuHotItem;
+import fun.icystal.vo.ZhiHuItemVO;
 import fun.icystal.act.mapper.ZhiHuHotItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ZhiHuService {
+
+    private static final Integer maxDisplayHotItemsSize = 99;
 
     private final ZhiHuHotItemMapper zhiHuHotItemMapper;
 
@@ -33,7 +33,7 @@ public class ZhiHuService {
         List<ZhiHuHotItem> hotItems = zhiHuHotItemMapper.queryByDuration(startTime, endTime);
 
         Map<String, Integer> cntMap = new HashMap<>();
-        return hotItems.stream()
+        List<ZhiHuItemVO> itemVOs = hotItems.stream()
                 .filter(item -> Objects.nonNull(item) && Objects.nonNull(item.getLink()) && Objects.nonNull(item.getTitle()))
                 .peek(item -> cntMap.merge(item.getLink(), 1, Integer::sum))
                 .filter(item -> cntMap.get(item.getLink()) == 1)
@@ -52,11 +52,15 @@ public class ZhiHuService {
                 })
                 .map(item -> {
                     ZhiHuItemVO itemVO = new ZhiHuItemVO();
-                    itemVO.setTitle(item.getTitle());
+                    itemVO.setTitle(item.getTitle().strip());
                     itemVO.setLink(item.getLink());
                     return itemVO;
                 })
                 .toList();
+        if (itemVOs.size() > maxDisplayHotItemsSize) {
+            itemVOs = itemVOs.subList(0, maxDisplayHotItemsSize);
+        }
+        return itemVOs;
     }
 
 

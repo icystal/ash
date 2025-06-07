@@ -2,7 +2,7 @@ package fun.icystal.ash.crawler.fetcher;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import fun.icystal.ZhiHuHotItem;
+import fun.icystal.entity.ZhiHuHotItem;
 import fun.icystal.ash.crawler.http.HttpRequestEmitter;
 import fun.icystal.ash.crawler.http.SimpleRequestEmitter;
 import fun.icystal.exception.FetchFailedException;

@@ -1,6 +1,6 @@
 package fun.icystal.act.mapper;
 
-import fun.icystal.ZhiHuHotItem;
+import fun.icystal.entity.ZhiHuHotItem;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
