@@ -1,5 +1,7 @@
 package fun.icystal.ash.crawler.http;
 
+import lombok.NonNull;
+
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -13,7 +15,7 @@ public class SimpleRequestEmitter implements HttpRequestEmitter{
 
     private final Map<String, String> headers;
 
-    public SimpleRequestEmitter(Map<String, String> headers, boolean cookieIgnored) {
+    public SimpleRequestEmitter(@NonNull Map<String, String> headers, boolean cookieIgnored) {
         Map<String, String> customHeaders = new ConcurrentHashMap<>(headers);
         if (cookieIgnored) {
             customHeaders.remove("Cookie");

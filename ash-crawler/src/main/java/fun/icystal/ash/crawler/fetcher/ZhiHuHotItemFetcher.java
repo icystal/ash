@@ -1,26 +1,26 @@
 package fun.icystal.ash.crawler.fetcher;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
+import fun.icystal.ash.crawler.util.Loader;
 import fun.icystal.entity.ZhiHuHotItem;
 import fun.icystal.ash.crawler.http.HttpRequestEmitter;
 import fun.icystal.ash.crawler.http.SimpleRequestEmitter;
 import fun.icystal.exception.FetchFailedException;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
 public class ZhiHuHotItemFetcher extends Fetcher<List<ZhiHuHotItem>> {
-    private static final String resourcePath = "crawler/headers.json";
+    private static final String resourcePath = "crawler/zh_headers.json";
 
     private static final String url = "https://www.zhihu.com/hot";
 
@@ -30,7 +30,7 @@ public class ZhiHuHotItemFetcher extends Fetcher<List<ZhiHuHotItem>> {
 
     @Override
     protected CookieHandler initCookieHandler() {
-        Map<String, String> headers = readHeaders();
+        Map<String, String> headers = Loader.loadJsonAsMap(resourcePath);
 
         CookieManager manager = new CookieManager();
         manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
@@ -56,27 +56,15 @@ public class ZhiHuHotItemFetcher extends Fetcher<List<ZhiHuHotItem>> {
                 }).toList();
     }
 
-    private Map<String, String> readHeaders() {
-        try (InputStream resource = ZhiHuHotItemFetcher.class.getClassLoader().getResourceAsStream(resourcePath)) {
-            if (resource == null) {
-                return Collections.emptyMap();
-            }
-            String content = new String(resource.readAllBytes(), StandardCharsets.UTF_8);
-            return JSON.parseObject(content, new TypeReference<>() {});
-        } catch (Exception e) {
-            log.error("load headers from resource file failed", e);
-            return Collections.emptyMap();
-        }
-    }
-
     @Override
     protected HttpRequestEmitter initEmitter() {
-        Map<String, String> headers = readHeaders();
+        Map<String, String> headers = Loader.loadJsonAsMap(resourcePath);
         return new SimpleRequestEmitter(headers, true);
     }
 
     @Override
-    protected List<ZhiHuHotItem> select(Document document) {
+    protected List<ZhiHuHotItem> select(HttpResponse<String> response) {
+        Document document = Jsoup.parse(response.body());
         LocalDateTime time = LocalDateTime.now();
         Elements hotItems = document.getElementsByClass("HotItem");
 

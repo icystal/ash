@@ -3,8 +3,6 @@ package fun.icystal.ash.crawler.fetcher;
 import fun.icystal.ash.crawler.http.HttpRequestEmitter;
 import fun.icystal.exception.FetchFailedException;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.net.CookieHandler;
@@ -51,11 +49,8 @@ public abstract class Fetcher<T> {
         if (response.statusCode() != HTTP_RESPONSE_STATUS_OK) {
             throw new FetchFailedException();
         }
-
         emitter.response(response);
-
-        Document document = Jsoup.parse(response.body());
-        return select(document);
+        return select(response);
     }
 
     public T fetch(int retry) {
@@ -77,5 +72,5 @@ public abstract class Fetcher<T> {
         }
     }
 
-    protected abstract T select(Document document);
+    protected abstract T select(HttpResponse<String> response);
 }
