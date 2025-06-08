@@ -54,6 +54,30 @@
             font-family: Consolas, Monaco, monospace;
             flex-shrink: 0;
         }
+        .hot-title-wrapper {
+            flex: 1;
+            display: inline;
+            word-break: break-word;
+        }
+        .hot-dominate-tag {
+            height: 24px;
+            padding: 0 3px;
+            background-color: #AD2222;
+            color: #F9ECDF;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-family: "SimSun", "STKaiti", serif;
+            font-weight: bold;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            vertical-align: center;
+            line-height: 1;
+            margin-left: 6px;
+            border: 1px solid #a02828;
+            white-space: nowrap;
+        }
         .hot-item {
             padding: 12px 0;
             border-bottom: 1px solid #f0f2f7;
@@ -91,7 +115,10 @@
     <div class="content">
         <div th:each="hotItem, item : ${hotItems}" class="hot-item">
             <div class="hot-rank" th:text="${item.index + 1}">*</div>
-            <a th:href="${hotItem.link}" th:text="${hotItem.title}">热搜</a>
+            <div class="hot-title-wrapper">
+                <a th:href="${hotItem.link}" th:text="${hotItem.title}">□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</a>
+                <div th:if="${hotItem.dominate}" class="hot-dominate-tag">霸榜</div>
+            </div>
         </div>
     </div>
     <div class="footer">

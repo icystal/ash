@@ -25,7 +25,7 @@ public class ZhiHuFetchScheduler {
         zhiHuHotItemFetcher = new ZhiHuHotItemFetcher();
     }
 
-    @Scheduled(cron = "7 30 * * * ?")
+    @Scheduled(cron = "7 48 * * * ?")
     public void fetchHotItems() {
         log.info("[知乎] schedule task for hot items start");
         List<ZhiHuHotItem> items = zhiHuHotItemFetcher.fetch(3);

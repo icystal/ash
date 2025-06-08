@@ -12,4 +12,6 @@ public class ZhiHuItemVO {
     private String title;
 
     private String link;
+
+    private boolean dominate;
 }

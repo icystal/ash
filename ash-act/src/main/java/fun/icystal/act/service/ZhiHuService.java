@@ -20,6 +20,8 @@ public class ZhiHuService {
 
     private static final Integer maxDisplayHotItemsSize = 99;
 
+    private static final Integer dominateTagThreshold = 12;
+
     private final ZhiHuHotItemMapper zhiHuHotItemMapper;
 
     public void saveHotItems(List<ZhiHuHotItem> hotItems) {
@@ -60,7 +62,19 @@ public class ZhiHuService {
         if (itemVOs.size() > maxDisplayHotItemsSize) {
             itemVOs = itemVOs.subList(0, maxDisplayHotItemsSize);
         }
+        handleDominateTag(itemVOs, cntMap);
         return itemVOs;
+    }
+
+    /**
+     * 处理霸榜标签
+     * 如果 话题 24h 内出现超过 dominateTagThreshold 次, 打上霸榜标签
+     */
+    private void handleDominateTag(List<ZhiHuItemVO> zhiHuItemVOs, Map<String, Integer> cntMap) {
+        zhiHuItemVOs.forEach(item -> {
+            Integer cnt = cntMap.get(item.getLink());
+            item.setDominate(cnt != null && cnt >= dominateTagThreshold);
+        });
     }
 
 
