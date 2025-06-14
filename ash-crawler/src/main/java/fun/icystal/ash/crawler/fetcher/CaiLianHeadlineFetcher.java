@@ -27,7 +27,7 @@ public class CaiLianHeadlineFetcher extends Fetcher<List<CaiLianHeadline>>{
 
     private static final String detailPrefix = "https://www.cls.cn/detail/";
 
-    protected CaiLianHeadlineFetcher() {
+    public CaiLianHeadlineFetcher() {
         super(url);
     }
 
