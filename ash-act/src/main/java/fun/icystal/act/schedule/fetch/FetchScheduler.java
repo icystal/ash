@@ -34,14 +34,14 @@ public class FetchScheduler {
         caiLianHeadlineFetcher = new CaiLianHeadlineFetcher();
     }
 
-    @Scheduled(cron = "7 48 * * * ?")
+    @Scheduled(cron = "7 59 * * * ?")
     public void fetchHotItems() {
         log.info("[知乎] schedule task for hot items start");
         List<ZhiHuHotItem> items = zhiHuHotItemFetcher.fetch(3);
         zhiHuService.saveHotItems(items);
     }
 
-    @Scheduled(cron = "7 11 * * * ?")
+    @Scheduled(cron = "7 32 * * * ?")
     public void fetchCaiLianHeadline() {
         log.info("[财联社] schedule task for headlines start");
         List<CaiLianHeadline> headlines = caiLianHeadlineFetcher.fetch(3);

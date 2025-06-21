@@ -35,7 +35,7 @@ public class ZhiHuHotItemsScheduler {
     @Resource
     private SubscribeService subscribeService;
 
-    @Scheduled(cron = "0 50 * * * ?")
+    @Scheduled(cron = "0 50 22 * * ?")
     public void hotItemsEmail() {
         List<String> emails = subscribeService.querySubscribedEmail(SubscribeType.ZHI_HU_HOT_ITEMS);
         if (emails.isEmpty()) {

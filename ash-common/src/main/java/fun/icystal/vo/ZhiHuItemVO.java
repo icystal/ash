@@ -14,4 +14,8 @@ public class ZhiHuItemVO {
     private String link;
 
     private boolean dominate;
+
+    private transient int sort;
+
+    private transient int cnt;
 }

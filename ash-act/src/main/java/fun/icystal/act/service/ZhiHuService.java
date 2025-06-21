@@ -1,17 +1,16 @@
 package fun.icystal.act.service;
 
+import fun.icystal.act.processor.OverviewProcessor;
 import fun.icystal.entity.ZhiHuHotItem;
 import fun.icystal.vo.ZhiHuItemVO;
 import fun.icystal.act.mapper.ZhiHuHotItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +26,33 @@ public class ZhiHuService {
     public void saveHotItems(List<ZhiHuHotItem> hotItems) {
         Integer cnt = zhiHuHotItemMapper.insert(hotItems);
         log.info("[知乎] saved {} hot items", cnt);
+    }
+
+    @OverviewProcessor(title = "知乎热榜")
+    public List<ZhiHuItemVO> hotItemsRealTime() {
+        LocalDateTime endTime = LocalDateTime.now();
+        LocalDateTime startTime = endTime.plusHours(-2);
+        List<ZhiHuHotItem> hotItems = zhiHuHotItemMapper.queryByDuration(startTime, endTime);
+
+        if (CollectionUtils.isEmpty(hotItems)) {
+            return null;
+        }
+
+        List<ZhiHuItemVO> hotItemVOs = new ArrayList<>();
+        LocalDateTime fetchTime = hotItems.getFirst().getFetchTime();
+
+        for (ZhiHuHotItem zhiHuHotItem : hotItems) {
+            if (!Objects.equals(fetchTime, zhiHuHotItem.getFetchTime())) {
+                continue;
+            }
+            ZhiHuItemVO itemVO = new ZhiHuItemVO();
+            itemVO.setTitle(zhiHuHotItem.getTitle());
+            itemVO.setLink(zhiHuHotItem.getLink());
+            itemVO.setSort(zhiHuHotItem.getSort());
+            hotItemVOs.add(itemVO);
+        }
+        hotItemVOs.sort(Comparator.comparingInt(ZhiHuItemVO::getSort));
+        return hotItemVOs;
     }
 
     public List<ZhiHuItemVO> hotItemsYesterday() {
@@ -76,7 +102,4 @@ public class ZhiHuService {
             item.setDominate(cnt != null && cnt >= dominateTagThreshold);
         });
     }
-
-
-
 }
