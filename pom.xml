@@ -19,6 +19,8 @@
     <modules>
         <module>ash-common</module>
         <module>ash-data</module>
+        <module>ash-fetcher</module>
+        <module>ash-application</module>
     </modules>
 
     <properties>

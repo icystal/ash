@@ -1,0 +1,31 @@
+{
+  "https://www.zhihu.com": {
+    "Sec-Ch-Ua": "\"Chromium\";v=\"136\", \"Google Chrome\";v=\"136\", \"Not.A/Brand\";v=\"99\"",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Cache-Control": "max-age=0",
+    "Priority": "u=0, i",
+    "Sec-Ch-Ua-Platform": "\"Windows\"",
+    "Accept-Language": "zh-CN,zh;q=0.9",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Cookie": "SESSIONID=MpvxKakv0FsanqlVF80mgtc5VxqoLE77K36p4rxQlrA; JOID=Wl8UAUuwygr9HjFaDrpNkAIXX9wQ5qlLr0NKG1XLjXqJK1gsXbE9a58ZOF8PTE4IeVEiLp82ZHAUaaXmCKgNdvM=; osd=WlocBkuwzwL6HjFfBr1NkAcfWNwQ46FMr0NPE1LLjX-BLFgsWLk6a58cMFgPTEsAflEiK5cxZHARYaLmCK0FcfM=; q_c1=217b5322507442f9842dff7941e4f3dc|1718784678000|1718784678000; _zap=7e048cf6-d114-436a-b771-f82698a3b85e; d_c0=AvDRz4TYjBmPTsCAwe99roZZFq_JiiaQMvU=|1731728729; _xsrf=u9Ju3tvyg0TUZKE3qgrCjHmbXgMCQGKw; __snaker__id=OjBeeVzZAmESFkIV; gdxidpyhxdE=4%5CkbG6o6X%5CQ3weLSdHJHdD69GH%2B33%2FaXc1Vs46qvPGtbo3%2FCI2wRZoh73GWPat0s92m07oo0UmxP1ojRU%2FvUbPBc3mNyum5pYfbYh3kyu%2FtEB%2BYTauXbdPGz%2FoC3Zu%2FDoalBMgD%2B%2B5WIrK8QeAywjNs%2BerzYvJXm8iq99W1EUOmn2Ndm%3A1748618353420; captcha_session_v2=2|1:0|10:1748617454|18:captcha_session_v2|88:SVFzaTllR0VtYm9UOHd1RG1nTVNRbEw3ZHI2amVFYWxjTysvTm5LTWVXeUFLUjFad3BrcmRLRDlDNnY2ZHV0Mw==|1454238949eba3fc6f2b2af18b940919c758eb703b22b407b90711799fcd2b0d; captcha_ticket_v2=2|1:0|10:1748617460|17:captcha_ticket_v2|728:eyJ2YWxpZGF0ZSI6IkNOMzFfYk1uM284UmtoU2JXcGJnMmo0ZGhvay5xcm5BOURZNS5jRnlTaEkyZkRBazVvNEVWcDFfT0M1YnVicjl6dEtGX2xVT2hOTnZlZW16S2l5QVpyeDFEVmE5a0hvX01NUzlzNktmbTNnWkFmRDkwUm9YdEExbjFxUnFCQUVQYnFRRnBxZGxHS2IwdVN5MmplYXZEcWZfRWhwVkhxYjJSOEswbkpENFFFWWZGTk1vV2VQbi5Lb00qajhJQ3dFV01GMTZDWEZrY3c2Q21IQTV1eXF2ZmxMTTByVm1sQlZDM01wbFpWLmpsTV91M09CRFRTTGRoZDV1a3RGYTJWTERmZTVqOGZWZnpiUEVvSFEqZ0lwcURFTWxlY1hqMnhnanVNWXU2Qi5DOEJ5cktpMGtBRmc0OEdKamVrMHVOZFRSSEVlZUJmdFVGSmRBV25NSUZ0emduQkVhNnFMcVpxRThDeGF6ekpaTlN3RkxOekw4cGlmVzU5SlZaZ1hKdWRsWUQ2NFkwWVdDV2w5Q3h6WlBodm9rUEJXbjBEQTRLMmJqTVQycERUaVpYR1QuM2tPTDZyWGlOeDJjMllId0puSmx4KnFaRW1NbUF3blZHbWIyNWZnamJ6ZjVjcmxaY2xHZ2tmZ2hpbFppNipjakVnX3JrYU9WX0hOUGJubzRUVWhoMmR3dnJQNXBLKlg3N192X2lfMSJ9|5a8aca2f6c609a35bbc27cfa19eb15c0744880e919182addc4c88a3b8d2a5786; z_c0=2|1:0|10:1748792393|4:z_c0|92:Mi4xUXRkb1V3QUFBQUFDOE5IUGhOaU1HU1lBQUFCZ0FsVk5CaGNuYVFBRllKb2JlNmJmWll6WDBCRndXc1ZMOGV0Znd3|648efcd1f63e0ef05263aba1e6f5b3b6bd7b22ecf77d405bf09aadfa0df3bb1e; __zse_ck=004_8NReHnsFqSFUAZemDG3IP5jSDjR2f=sGGoWhQrqtYhlYZ2k/rKC0kE2NajZNqbODWeKWObUzsweVTyYiOxlwVxJSac2lNXIbex/2rwalQykOEDq/npaRYWdQ=7vm3cTu-jKjwWgB7eTDuqD6gMfsUnbctLW0+b470EXS/dTtZ6IFzbpSk/RKpNtLvWTj8/SEb8DrIWoffmKsgSukBbnKK+9rEbAtXkTPZh9KIRS8eRqhHtlVKUbSEY25nDzeVTsP3; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1750589304,1751104372,1751105648,1751183874; HMACCOUNT=B26F70E0BAB12708; SESSIONID=YeBPUtGXsHvw7ayUQudauIpDyXLIrBDwXR6bwOnDDGy; JOID=UFAWBEr_TXOdFgGyI_rE4WgcYDo1rCM1y0B__n-PDw7uJ2PBff2wEfAfAL0hCxM6QqT8JywDFPBcB0JLw8kjc-4=; osd=UlgUA079RXGaEgO6If3A42AeZz43pCEyz0J3_HiLDQbsIGfDdf-3FfIXArolCRs4RaD-Ly4EEPJUBUVPwcEhdOo=; tst=h; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1751183879; BEC=d6322fc1daba6406210e61eaa4ec5a7a",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+  },
+
+  "https://www.cls.cn/telegraph": {
+    "Sec-Ch-Ua": "\"Chromium\";v=\"136\", \"Google Chrome\";v=\"136\", \"Not.A/Brand\";v=\"99\"",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Cache-Control": "max-age=0",
+    "Priority": "u=0, i",
+    "Sec-Ch-Ua-Platform": "\"Windows\"",
+    "Accept-Language": "zh-CN,zh;q=0.9",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec_Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+    "referer": "https://www.cls.cn/depth?id=1000",
+    "Cookie": "HWWAFSESID=e599f9ac0e9c7d85da; HWWAFSESTIME=1749368292081; Hm_lvt_fa5455bb5e9f0f260c32a1d45603ba3e=1748847029,1749308589,1749314759,1749368296; HMACCOUNT=B26F70E0BAB12708; hasTelegraphNotification=on; hasTelegraphRemind=on; hasTelegraphSound=on; vipNotificationState=on; Hm_lpvt_fa5455bb5e9f0f260c32a1d45603ba3e=1749368310; tfstk=gw4ZM8YDrNQNW1Dtjyg2LmKbuS3tuqWW3rMjiSVm1ADM5F90Y-2H5mXTGJl4FSYbhrPvujV0H1Hf6MNT6q3cFTgVP5FtIUiD69gciW0jg6n8dnFT6qdLMB6QA5d4PX-Soq2m-DcjaqcmoqfexjMHSjYiipfEpvcMSfYmKWcmaKx0nqfUtvhmof2mj6PntHkmFelrjsh72F4isfoZE5Dg15anjLMusbTDoAlZb6NiLEY08okuLeDG2BMx5AFx_-QJWVm4jRlnuZ8n7RFgoDzfdaiaZj2x5yfDjYq_C24g4IY0TVkicPnyQ9kuWW4--D_laW4LC5UUGIbmO8M36P0Vr_3ZSA0E9r6pSxr3mPitkdXZoWlc46pxtT9bklJD0ccKTY1FTqgz3uRK13wwDnnTvXk561KvDccKTY1FTnKxX2hEF1CO.",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+  }
+}
